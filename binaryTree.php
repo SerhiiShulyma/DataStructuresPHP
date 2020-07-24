@@ -24,6 +24,7 @@ class TreeNode
 class BinaryTree
 {
     private $root;
+    private $traversalData = array();
 
     public function __construct()
     {
@@ -254,6 +255,80 @@ class BinaryTree
         }
         return $current;
     }
+/**
+ *InOrdered Tree Traversal
+ * 
+ */
+    private function inOrderedTraversal($node)
+    {
+        if($node->left){
+            $this->inOrderedTraversal($node->left);
+        }
+        $this->traversalData[] = $node->data;
+        if($node->right){
+            $this->inOrderedTraversal($node->right);
+        }
+    }
+/**
+ *postOrdered Tree Traversal
+ * 
+ */
+private function postOrderedTraversal($node)
+{
+    if($node->left){
+        $this->postOrderedTraversal($node->left);
+    }
+    if($node->right){
+        $this->postOrderedTraversal($node->right);
+    }
+    $this->traversalData[] = $node->data;
+}
+/**
+ *preOrdered Tree Traversal
+ * 
+ */
+private function preOrderedTraversal($node)
+{
+    $this->traversalData[] = $node->data;
+    if($node->left){
+        $this->preOrderedTraversal($node->left);
+    }
+    if($node->right){
+        $this->preOrderedTraversal($node->right);
+    }
+}
+/***
+ *  Show data at different Traversal
+ */
+
+    public function showTraversal($traversal='inordered')
+    {
+        try{
+            switch($traversal){
+                case 'inordered':
+                    $this->inOrderedTraversal($this->root);
+                    print_r($this->traversalData);
+                    unset($this->traversalData);
+                break;
+                case 'postordered':
+                    $this->postOrderedTraversal($this->root);
+                    print_r($this->traversalData);
+                    unset($this->traversalData);
+                break;
+                case 'preordered':
+                    $this->preOrderedTraversal($this->root);
+                    print_r($this->traversalData);
+                    unset($this->traversalData);
+                break;
+                default:
+                    throw new Exception("Wrong Traversal Type");                    
+                break;
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
 }
 
 $binaryTree = new BinaryTree();
@@ -283,3 +358,13 @@ $binaryTree->delete($element);
 print_r($binaryTree);
 
 echo nl2br("<br>");
+echo nl2br("<br>");
+echo nl2br("<br>");
+
+$binaryTree->showTraversal('inordered');
+echo nl2br("<br>");
+echo nl2br("<br>");
+$binaryTree->showTraversal('postordered');
+echo nl2br("<br>");
+echo nl2br("<br>");
+$binaryTree->showTraversal('preordered');
