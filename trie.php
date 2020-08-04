@@ -162,9 +162,6 @@ class Trie
                 if($this->notHasChildren($current) && $current->getIsEnd()==false){
                     unset($current);
                     $current =null;
-                } else{
-                    $char = substr($key, $depth, 1);
-                    unset($current->children[$char]);
                 }
                 return $current;
             }
@@ -178,6 +175,7 @@ class Trie
 
 $x = new Trie();
 $x->insert("Hello", new Person("John", "Doe"));
+$x->insert("Heaaallo", new Person("John", "Doe"));
 $x->insert("Hels", new Person("qqq", "www"));
 $x->insert("JLo", new Person("Jo", "D"));
 $x->retrieve("JLo");
@@ -185,5 +183,5 @@ $x->retrieve("JLo");
 
 echo "Deletion";
 echo nl2br("\n");
-$x->removeKey($x->getRoot(), "JLo");
+$x->removeKey($x->getRoot(), "Hello");
 print_r($x);
